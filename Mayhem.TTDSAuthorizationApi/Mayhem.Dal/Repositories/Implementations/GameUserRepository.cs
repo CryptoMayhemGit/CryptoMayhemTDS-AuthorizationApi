@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Mayhem.Dal.Context;
 using Mayhem.Dal.Repositories.Interfaces;
+using Mayhem.Dal.Tables;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mayhem.Dal.Repositories.Implementations
@@ -22,6 +23,24 @@ namespace Mayhem.Dal.Repositories.Implementations
                 .GameUsers
                 .AsNoTracking()
                 .AnyAsync(x => x.Wallet == wallet);
+        }
+
+        public async Task<List<GameUser>> GetGameUsers()
+        {
+            return await mayhemDataContext
+                .GameUsers
+                .Include(x => x.VoteCategory)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<GameUser?> GetGameUserByWalletAddress(string walletAddress)
+        {
+            return await mayhemDataContext
+                .GameUsers
+                .Include(x => x.VoteCategory)
+                .Where(x => x.Wallet == walletAddress)
+                .SingleOrDefaultAsync();
         }
     }
 }

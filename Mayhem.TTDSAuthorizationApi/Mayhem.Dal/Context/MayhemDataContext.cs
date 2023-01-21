@@ -18,6 +18,7 @@ namespace Mayhem.Dal.Context
 
         public virtual DbSet<GameUser> GameUsers { get; set; }
         public virtual DbSet<GameUserBlock> GameUserBlocks { get; set; }
+        public virtual DbSet<VoteCategory> VoteCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

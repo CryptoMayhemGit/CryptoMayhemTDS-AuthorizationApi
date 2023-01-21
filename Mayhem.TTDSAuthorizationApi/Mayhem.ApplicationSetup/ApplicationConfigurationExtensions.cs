@@ -58,6 +58,7 @@ namespace Mayhem.ApplicationSetup
             services.AddScoped<IWalletAuthenticationService, WalletAuthenticationService>();
             services.AddScoped<IBlockchainService, BlockchainService>();
             services.AddScoped<ITicketEndoceService, TicketEndoceService>();
+            services.AddScoped<IWalletVotePowerService, WalletVotePowerService>();
         }
 
         public static void AddRepository(this IServiceCollection services)
