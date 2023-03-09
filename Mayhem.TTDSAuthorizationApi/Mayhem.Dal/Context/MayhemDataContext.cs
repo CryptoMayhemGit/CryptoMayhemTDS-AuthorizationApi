@@ -29,7 +29,7 @@ namespace Mayhem.Dal.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer();
+            optionsBuilder.UseSqlServer("Server=tcp:kielson-server.database.windows.net,1433;Initial Catalog=TDSAuthApiSqlDatabase;Persist Security Info=False;User ID=kielson;Password=SuperHaslo123!@#;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
     }
 }

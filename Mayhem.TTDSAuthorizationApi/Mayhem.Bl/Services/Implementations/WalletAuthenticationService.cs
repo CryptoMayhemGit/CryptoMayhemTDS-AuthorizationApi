@@ -7,6 +7,7 @@ using Mayhem.Util.Classes;
 using Mayhem.Util.Exceptions;
 using Microsoft.Extensions.Logging;
 using System.Net.NetworkInformation;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
 
@@ -60,6 +61,12 @@ namespace Mayhem.Bl.Services.Implementations
         private async Task ValidateRequest(AuthorizationDecodedRequest authorizationDecodedRequest)
         {
             var accessToken = await GetCyberConnectAccesTokenAsync(authorizationDecodedRequest.signedData.Wallet, authorizationDecodedRequest.signedFreshData.Signature);
+            var handleWallet = await GetProfileByHandle(authorizationDecodedRequest.signedData.Handle);
+
+            if (handleWallet.ToLower() != authorizationDecodedRequest.signedData.Wallet)
+            {
+                AddErrorAccessDenied();
+            }
 
             if (string.IsNullOrEmpty(accessToken))
             {
@@ -133,6 +140,45 @@ namespace Mayhem.Bl.Services.Implementations
                 var result = JsonSerializer.Deserialize<CcLoginResponse>(content);
                 if (result.data == null) return string.Empty;
                 return result.data.loginVerify.accessToken.ToString();
+            }
+
+            return string.Empty;
+        }
+
+        private async Task<string> GetProfileByHandle(string handle)
+        {
+            var mutation = @"query getProfileByHandle($handle: String!){
+                            profileByHandle(handle: $handle) {
+                            metadataInfo {
+                                    avatar
+                                    bio
+                                }
+                                owner {
+                                    address
+                                }
+                                isPrimary
+                            }
+                            }";
+
+            var variables = new
+            {
+                handle
+            };
+
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://api.cyberconnect.dev/")
+            {
+                Content = new StringContent(JsonSerializer.Serialize(new { query = mutation, variables }), Encoding.UTF8, "application/json")
+            };
+
+            var response = await httpClient.SendAsync(request);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            if (!string.IsNullOrEmpty(content))
+            {
+                var result = JsonSerializer.Deserialize<ProfileByHandleDataResponse>(content);
+                if (result.data.profileByHandle == null) return string.Empty;
+                return result.data.profileByHandle.owner.address;
             }
 
             return string.Empty;
