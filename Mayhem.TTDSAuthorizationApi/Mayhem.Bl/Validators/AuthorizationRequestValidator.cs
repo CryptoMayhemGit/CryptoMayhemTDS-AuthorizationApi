@@ -2,12 +2,17 @@
 using Mayhem.Bl.Services.Interfaces;
 using Mayhem.Bl.Validators.Base;
 using Mayhem.Dal.Dto.Requests;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 
 namespace Mayhem.Bl.Validators
 {
     public class AuthorizationRequestValidator : BaseValidator<AuthorizationDecodedRequest>
     {
-        public AuthorizationRequestValidator(IBlockchainService blockchainService)
+        public AuthorizationRequestValidator(
+            IBlockchainService blockchainService
+            )
         {
             Validation(blockchainService);
         }
