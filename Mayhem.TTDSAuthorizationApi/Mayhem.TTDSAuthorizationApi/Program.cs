@@ -59,6 +59,7 @@ builder.Services.AddAutoMapperConfiguration();
 builder.Services.AddServices();
 builder.Services.AddRepository();
 builder.Services.AddValidators();
+builder.Services.AddMayhemHttpClient();
 
 var app = builder.Build();
 

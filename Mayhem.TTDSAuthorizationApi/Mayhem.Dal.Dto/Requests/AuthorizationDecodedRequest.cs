@@ -6,5 +6,6 @@ namespace Mayhem.Dal.Dto.Requests
     {
         public SignedData signedData { get; set; }
         public SignedFreshData signedFreshData { get; set; }
+        public bool isCyberConnect { get; set; }
     }
 }

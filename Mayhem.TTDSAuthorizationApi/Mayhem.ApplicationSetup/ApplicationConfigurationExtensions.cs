@@ -2,6 +2,7 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using FluentValidation;
+using HotChocolate.Execution;
 using Mayhem.Bl.Services.Implementations;
 using Mayhem.Bl.Services.Interfaces;
 using Mayhem.Bl.Validators;
@@ -69,6 +70,15 @@ namespace Mayhem.ApplicationSetup
         public static void AddValidators(this IServiceCollection services)
         {
             services.AddScoped<IValidator<AuthorizationDecodedRequest>, AuthorizationRequestValidator>();
+        }
+
+        public static void AddMayhemHttpClient(this IServiceCollection services)
+        {
+            services.AddHttpClient<WalletAuthenticationService>(client =>
+            {
+                client.BaseAddress = new Uri("https://api.cyberconnect.dev/");
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
         }
     }
 }
