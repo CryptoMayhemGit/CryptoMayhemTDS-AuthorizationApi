@@ -35,6 +35,7 @@ namespace Mayhem.Bl.Services.Implementations
 
         public async Task<AuthorizationResponse> GetAuthorizedWalletAsync(string ticket)
         {
+            bool result = true;
             if (string.IsNullOrEmpty(ticket))
             {
                 AddErrorBadRequest();
@@ -43,7 +44,10 @@ namespace Mayhem.Bl.Services.Implementations
             AuthorizationDecodedRequest authorizationDecodedRequest = ticketEndoceService.DecodeTicket(ticket);
             await ValidateRequest(authorizationDecodedRequest);
 
-            bool result = await gameUserRepository.CheckWallet(authorizationDecodedRequest.signedData.Wallet);
+            if (authorizationDecodedRequest.isCyberConnect == false)
+            {
+                result = await gameUserRepository.CheckWallet(authorizationDecodedRequest.signedData.Wallet);
+            }
 
             if (result == false)
             {
@@ -56,6 +60,14 @@ namespace Mayhem.Bl.Services.Implementations
         private async Task ValidateRequest(AuthorizationDecodedRequest authorizationDecodedRequest)
         {
             var accessToken = await GetCyberConnectAccesTokenAsync(authorizationDecodedRequest.signedData.Wallet, authorizationDecodedRequest.signedFreshData.Signature);
+
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                authorizationDecodedRequest.isCyberConnect = false;
+            } else 
+            {
+                authorizationDecodedRequest.isCyberConnect = true;
+            } 
 
             var validationResult = await authorizationRequestValidator.ValidateAsync(authorizationDecodedRequest);
 

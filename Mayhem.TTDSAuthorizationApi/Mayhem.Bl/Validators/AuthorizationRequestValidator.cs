@@ -3,6 +3,7 @@ using Mayhem.Bl.Services.Interfaces;
 using Mayhem.Bl.Validators.Base;
 using Mayhem.Dal.Dto.Requests;
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
 
@@ -59,10 +60,18 @@ namespace Mayhem.Bl.Validators
 
         private void VerifyWalletWithSignedMessage(IBlockchainService blockchainService)
         {
-            RuleFor(x => new { x.signedFreshData, x.signedData }).MustAsync(async (request, cancellation) =>
+            RuleFor(x => new { x.signedFreshData, x.signedData, x.isCyberConnect }).MustAsync(async (request, cancellation) =>
             {
-                bool result = await blockchainService.VerifyWalletWithSignedMessageAsync(request.signedData.Wallet, request.signedFreshData.Data, request.signedFreshData.Signature);
-                return result;
+                if (request.isCyberConnect)
+                {
+                    bool result = await blockchainService.VerifyWalletWithSignedMessageAsync(request.signedData.Wallet, request.signedData.Message, request.signedFreshData.Signature);
+                    return result;
+                }
+                else
+                {
+                    bool result = await blockchainService.VerifyWalletWithSignedMessageAsync(request.signedData.Wallet, request.signedFreshData.Data, request.signedFreshData.Signature);
+                    return result;
+                }
             }).WithErrorCode("BAD_REQUEST");
         }
     }
