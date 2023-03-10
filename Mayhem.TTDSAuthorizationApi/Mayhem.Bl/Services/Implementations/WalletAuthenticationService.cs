@@ -47,7 +47,13 @@ namespace Mayhem.Bl.Services.Implementations
 
             if (authorizationDecodedRequest.isCyberConnect == false)
             {
-                result = await gameUserRepository.CheckWallet(authorizationDecodedRequest.signedData.Wallet);
+                try
+                {
+                    result = await gameUserRepository.CheckWallet(authorizationDecodedRequest.signedData.Wallet);
+                }catch (Exception ex)
+                {
+                    throw;
+                }
             }
 
             if (result == false)
@@ -60,12 +66,23 @@ namespace Mayhem.Bl.Services.Implementations
 
         private async Task ValidateRequest(AuthorizationDecodedRequest authorizationDecodedRequest)
         {
-            var accessToken = await GetCyberConnectAccesTokenAsync(authorizationDecodedRequest.signedData.Wallet, authorizationDecodedRequest.signedFreshData.Signature);
-            var handleWallet = await GetProfileByHandle(authorizationDecodedRequest.signedData.Handle);
+            string? handleWallet = string.Empty;
+            string? accessToken = string.Empty;
 
-            if (handleWallet.ToLower() != authorizationDecodedRequest.signedData.Wallet)
+            if (!string.IsNullOrEmpty(authorizationDecodedRequest.signedData.Handle))
             {
-                AddErrorAccessDenied();
+                try
+                {
+                    accessToken = await GetCyberConnectAccesTokenAsync(authorizationDecodedRequest.signedData.Wallet, authorizationDecodedRequest.signedFreshData.Signature);
+                    handleWallet = await GetProfileByHandle(authorizationDecodedRequest.signedData.Handle);
+                    if (string.IsNullOrEmpty(handleWallet) && handleWallet?.ToLower() != authorizationDecodedRequest.signedData.Wallet)
+                    {
+                        AddErrorAccessDenied();
+                    }
+                }catch (Exception ex)
+                {
+                    throw;
+                }
             }
 
             if (string.IsNullOrEmpty(accessToken))
@@ -74,7 +91,7 @@ namespace Mayhem.Bl.Services.Implementations
             } else 
             {
                 authorizationDecodedRequest.isCyberConnect = true;
-            } 
+            }
 
             var validationResult = await authorizationRequestValidator.ValidateAsync(authorizationDecodedRequest);
 
