@@ -2,7 +2,6 @@
 using Mayhem.Bl.Services.Interfaces;
 using Mayhem.Dal.Dto.Dtos;
 using Mayhem.Dal.Tables;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mayhem.TTDSAuthorizationApi.Controllers

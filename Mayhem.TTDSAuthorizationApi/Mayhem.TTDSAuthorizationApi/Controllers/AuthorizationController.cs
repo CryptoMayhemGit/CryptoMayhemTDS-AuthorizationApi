@@ -11,10 +11,12 @@ namespace Mayhem.TTDSAuthorizationApi.Controllers
     public class AuthorizationController : ControllerBase
     {
         private readonly IWalletAuthenticationService walletAuthenticationService;
+        private readonly IWalletAuthenticationInGameService walletAuthenticationInGameService;
 
-        public AuthorizationController(IWalletAuthenticationService walletAuthenticationService)
+        public AuthorizationController(IWalletAuthenticationService walletAuthenticationService, IWalletAuthenticationInGameService walletAuthenticationInGameService)
         {
             this.walletAuthenticationService = walletAuthenticationService;
+            this.walletAuthenticationInGameService = walletAuthenticationInGameService;
         }
 
         [Route("Login")]
@@ -23,6 +25,15 @@ namespace Mayhem.TTDSAuthorizationApi.Controllers
         public async Task<ActionResult> GetTicket([FromBody] AuthorizationRequest request)
         {
             AuthorizationResponse? response = await walletAuthenticationService.GetAuthorizedWalletAsync(request.Ticket);
+            return CreatedAtAction(nameof(GetTicket), response);
+        }
+
+        [Route("LoginToGame")]
+        [HttpPost]
+        [ProducesResponseType(typeof(AuthorizationResponse), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult> GetTicketInGame([FromBody] AuthorizationRequest request)
+        {
+            AuthorizationResponse? response = await walletAuthenticationInGameService.GetAuthorizedWalletInGameAsync(request.Ticket);
             return CreatedAtAction(nameof(GetTicket), response);
         }
     }
