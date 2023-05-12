@@ -11,29 +11,29 @@ namespace Mayhem.TTDSAuthorizationApi.Controllers
     public class AuthorizationController : ControllerBase
     {
         private readonly IWalletAuthenticationService walletAuthenticationService;
-        private readonly IWalletAuthenticationInGameService walletAuthenticationInGameService;
+        private readonly IInvestorService investorService;
 
-        public AuthorizationController(IWalletAuthenticationService walletAuthenticationService, IWalletAuthenticationInGameService walletAuthenticationInGameService)
+        public AuthorizationController(IWalletAuthenticationService walletAuthenticationService, IInvestorService walletAuthenticationInGameService)
         {
             this.walletAuthenticationService = walletAuthenticationService;
-            this.walletAuthenticationInGameService = walletAuthenticationInGameService;
+            this.investorService = walletAuthenticationInGameService;
         }
 
         [Route("Login")]
         [HttpPost]
         [ProducesResponseType(typeof(AuthorizationResponse), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetTicket([FromBody] AuthorizationRequest request)
+        public async Task<ActionResult> GetTicket([FromBody] AuthorizationRequestg request)
         {
             AuthorizationResponse? response = await walletAuthenticationService.GetAuthorizedWalletAsync(request.Ticket);
             return CreatedAtAction(nameof(GetTicket), response);
         }
 
-        [Route("LoginToGame")]
-        [HttpPost]
-        [ProducesResponseType(typeof(AuthorizationResponse), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetTicketInGame([FromBody] AuthorizationRequest request)
+        [Route("GetInvestorStatus")]
+        [HttpGet]
+        [ProducesResponseType(typeof(GetInvestorStatusResponse), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult> GetInvestorStatus([FromQuery] GetInvestorStatusRequest request)
         {
-            AuthorizationResponse? response = await walletAuthenticationInGameService.GetAuthorizedWalletInGameAsync(request.Ticket);
+            GetInvestorStatusResponse? response = await investorService.CheckIsExistAsync(request.Wallet);
             return CreatedAtAction(nameof(GetTicket), response);
         }
     }

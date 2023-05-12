@@ -1,6 +1,6 @@
 ﻿namespace Mayhem.Dal.Dto.Requests
 {
-    public class AuthorizationRequest
+    public class AuthorizationRequestg
     {
         public string Ticket { get; set; }
     }

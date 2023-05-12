@@ -1,8 +1,6 @@
-﻿using FluentValidation;
-using Mayhem.Bl.Services.Interfaces;
+﻿using Mayhem.Bl.Services.Interfaces;
 using Mayhem.Dal.Dto.Requests;
 using Mayhem.Dal.Dto.Requests.Models;
-using Mayhem.Dal.Repositories.Interfaces;
 using Mayhem.Util.Classes;
 using Mayhem.Util.Exceptions;
 using Microsoft.Extensions.Logging;
