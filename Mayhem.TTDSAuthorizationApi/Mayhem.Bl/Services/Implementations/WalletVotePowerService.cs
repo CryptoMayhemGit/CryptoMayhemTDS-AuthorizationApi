@@ -23,12 +23,12 @@ namespace Mayhem.Bl.Services.Implementations
             this.gameUserRepository = gameUserRepository;
         }
 
-        public async Task<GameUser?> GetWalletVotePowerByAddress(string walletAddress)
+        public async Task<GameUser?> GetWalletVotePowerByAddressAsync(string walletAddress)
         {
             return await gameUserRepository.GetGameUserByWalletAddress(walletAddress);
         }
 
-        public async Task<List<GameUserVoteDto>> GetWalletsVotePower()
+        public async Task<List<GameUserVoteDto>> GetWalletsVotePowerAsync()
         {
             List<GameUser> gameUsersWithoutDuplicates = new();
             List<GameUser> gameUsers = await this.gameUserRepository.GetGameUsers();

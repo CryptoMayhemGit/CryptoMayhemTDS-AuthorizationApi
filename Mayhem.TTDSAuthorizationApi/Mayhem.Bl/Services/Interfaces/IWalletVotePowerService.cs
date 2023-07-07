@@ -10,7 +10,7 @@ namespace Mayhem.Bl.Services.Interfaces
 {
     public interface IWalletVotePowerService
     {
-        Task<GameUser?> GetWalletVotePowerByAddress(string walletAddress);
-        Task<List<GameUserVoteDto>> GetWalletsVotePower();
+        Task<GameUser?> GetWalletVotePowerByAddressAsync(string walletAddress);
+        Task<List<GameUserVoteDto>> GetWalletsVotePowerAsync();
     }
 }

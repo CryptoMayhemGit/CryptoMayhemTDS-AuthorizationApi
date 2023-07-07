@@ -22,7 +22,7 @@ namespace Mayhem.TTDSAuthorizationApi.Controllers
         [Route("Login")]
         [HttpPost]
         [ProducesResponseType(typeof(AuthorizationResponse), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetTicket([FromBody] AuthorizationRequestg request)
+        public async Task<ActionResult> GetTicket([FromBody] AuthorizationRequest request)
         {
             AuthorizationResponse? response = await walletAuthenticationService.GetAuthorizedWalletAsync(request.Ticket);
             return CreatedAtAction(nameof(GetTicket), response);
@@ -34,7 +34,7 @@ namespace Mayhem.TTDSAuthorizationApi.Controllers
         public async Task<ActionResult> GetInvestorStatus([FromQuery] GetInvestorStatusRequest request)
         {
             GetInvestorStatusResponse? response = await investorService.CheckIsExistAsync(request.Wallet);
-            return CreatedAtAction(nameof(GetTicket), response);
+            return CreatedAtAction(nameof(GetInvestorStatus), response);
         }
     }
 }

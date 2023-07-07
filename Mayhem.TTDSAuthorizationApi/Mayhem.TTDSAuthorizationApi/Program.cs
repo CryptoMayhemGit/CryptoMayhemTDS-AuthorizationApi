@@ -51,8 +51,9 @@ builder.Services.AddMvc(options =>
 
 builder.Configuration.ConfigureKeyVault();
 string sqlConnectionString = builder.Configuration["SqlConnectionString"];
+string zealyApiKey = builder.Configuration["ZealyApiKey"];
 
-builder.Services.AddSingleton(new MayhemConfiguration(sqlConnectionString));
+builder.Services.AddSingleton(new MayhemConfiguration(sqlConnectionString, zealyApiKey));
 
 builder.Services.AddMayhemContext(sqlConnectionString);
 builder.Services.AddAutoMapperConfiguration();

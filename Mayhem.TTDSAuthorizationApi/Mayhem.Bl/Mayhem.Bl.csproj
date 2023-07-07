@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mayhem.Configuration\Mayhem.Configuration.csproj" />
     <ProjectReference Include="..\Mayhem.Dal.Dto\Mayhem.Dal.Dto.csproj" />
     <ProjectReference Include="..\Mayhem.Dal\Mayhem.Dal.csproj" />
     <ProjectReference Include="..\Mayhem.Util\Mayhem.Util.csproj" />

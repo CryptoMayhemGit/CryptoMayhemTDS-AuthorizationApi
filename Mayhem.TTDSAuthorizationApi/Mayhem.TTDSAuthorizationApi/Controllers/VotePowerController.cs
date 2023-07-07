@@ -27,7 +27,7 @@ namespace Mayhem.TTDSAuthorizationApi.Controllers
         public async Task<ActionResult> GetWalletVotePowerByWalletAddress(string walletAddress)
         {
             GameUser? gameUser = await walletVotePowerService
-                .GetWalletVotePowerByAddress(walletAddress);
+                .GetWalletVotePowerByAddressAsync(walletAddress);
             return CreatedAtAction(nameof(GetWalletVotePowerByWalletAddress), mapper.Map<GameUserVoteDto>(gameUser));
         }
 
@@ -35,7 +35,7 @@ namespace Mayhem.TTDSAuthorizationApi.Controllers
         [HttpGet]
         public async Task<ActionResult> GetWalletsVotePower()
         {
-            List<GameUserVoteDto> gameUsersVoteDto = await walletVotePowerService.GetWalletsVotePower();
+            List<GameUserVoteDto> gameUsersVoteDto = await walletVotePowerService.GetWalletsVotePowerAsync();
             return CreatedAtAction(nameof(GetWalletsVotePower), gameUsersVoteDto);
         }
     }
