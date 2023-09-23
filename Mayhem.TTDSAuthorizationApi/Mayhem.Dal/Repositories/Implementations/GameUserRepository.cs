@@ -2,6 +2,7 @@
 using Mayhem.Dal.Context;
 using Mayhem.Dal.Repositories.Interfaces;
 using Mayhem.Dal.Tables;
+using Mayhem.Dal.Types;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mayhem.Dal.Repositories.Implementations
@@ -41,6 +42,18 @@ namespace Mayhem.Dal.Repositories.Implementations
                 .Include(x => x.VoteCategory)
                 .Where(x => x.Wallet == walletAddress)
                 .SingleOrDefaultAsync();
+        }
+
+        public async Task<int> GetGameUserInvestment(string walletAddress)
+        {
+            return await mayhemDataContext
+                .GameUsers
+                .Include(x => x.VoteCategory)
+                .Where(x => x.Wallet == walletAddress)
+                .Where(x => x.VoteCategoryId == (int)InvestorCategory.FirstSale
+                || x.VoteCategoryId == (int)InvestorCategory.SecondSale
+                || x.VoteCategoryId == (int)InvestorCategory.ThirdSale)
+                .SumAsync(x => x.UsdcAmount);
         }
     }
 }

@@ -2,15 +2,6 @@
 using Mayhem.Dal.Dto.Dtos;
 using Mayhem.Dal.Repositories.Interfaces;
 using Mayhem.Dal.Tables;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mayhem.Bl.Services.Implementations
 {

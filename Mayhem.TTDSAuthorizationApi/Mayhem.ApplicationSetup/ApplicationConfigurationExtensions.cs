@@ -2,7 +2,6 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using FluentValidation;
-using HotChocolate.Execution;
 using Mayhem.Bl.Services.Implementations;
 using Mayhem.Bl.Services.Interfaces;
 using Mayhem.Bl.Validators;
@@ -60,6 +59,7 @@ namespace Mayhem.ApplicationSetup
             services.AddScoped<IInvestorService, InvestorService>();
             services.AddScoped<IBlockchainService, BlockchainService>();
             services.AddScoped<IAchievementService, AchievementService>();
+            services.AddScoped<IVestingService, VestingService>();
             services.AddScoped<ITicketEndoceService, TicketEndoceService>();
             services.AddScoped<IWalletVotePowerService, WalletVotePowerService>();
             services.AddScoped<IZealyService, ZealyService>();

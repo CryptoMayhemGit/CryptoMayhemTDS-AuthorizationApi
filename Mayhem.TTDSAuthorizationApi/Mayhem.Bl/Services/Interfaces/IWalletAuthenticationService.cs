@@ -1,5 +1,4 @@
-﻿using Mayhem.Dal.Dto.Requests;
-using Mayhem.Dal.Dto.Response;
+﻿using Mayhem.Dal.Dto.Response;
 
 namespace Mayhem.Bl.Services.Interfaces
 {

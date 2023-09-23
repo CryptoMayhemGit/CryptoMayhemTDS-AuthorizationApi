@@ -1,8 +1,6 @@
 ﻿using Mayhem.Dal.MappingsConfiguration;
 using Mayhem.Dal.Tables;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Protocols;
 
 namespace Mayhem.Dal.Context
 {

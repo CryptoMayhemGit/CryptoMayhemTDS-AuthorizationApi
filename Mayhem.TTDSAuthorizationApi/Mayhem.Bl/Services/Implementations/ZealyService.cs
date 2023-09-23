@@ -1,6 +1,5 @@
 ﻿using Mayhem.Bl.Services.Interfaces;
 using Mayhem.Configuration;
-using Mayhem.Dal.Dto.Requests;
 using Mayhem.Dal.Dto.Response;
 using Mayhem.Util.Classes;
 using Mayhem.Util.Exceptions;

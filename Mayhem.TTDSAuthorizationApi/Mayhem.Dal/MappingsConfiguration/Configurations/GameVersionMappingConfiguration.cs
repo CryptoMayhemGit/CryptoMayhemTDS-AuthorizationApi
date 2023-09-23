@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Mayhem.Dal.Tables;
 using Microsoft.EntityFrameworkCore;
-using Mayhem.Dal.Tables;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Mayhem.Dal.MappingsConfiguration.Configurations
 {

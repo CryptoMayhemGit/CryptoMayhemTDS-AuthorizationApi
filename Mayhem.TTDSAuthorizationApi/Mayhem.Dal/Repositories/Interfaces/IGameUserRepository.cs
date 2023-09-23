@@ -7,5 +7,6 @@ namespace Mayhem.Dal.Repositories.Interfaces
         Task<bool> CheckWallet(string wallet);
         Task<List<GameUser>> GetGameUsers();
         Task<GameUser?> GetGameUserByWalletAddress(string walletAddress);
+        Task<int> GetGameUserInvestment(string walletAddress);
     }
 }

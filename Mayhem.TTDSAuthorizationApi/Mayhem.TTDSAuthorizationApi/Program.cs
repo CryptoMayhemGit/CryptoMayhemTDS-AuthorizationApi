@@ -52,8 +52,9 @@ builder.Services.AddMvc(options =>
 builder.Configuration.ConfigureKeyVault();
 string sqlConnectionString = builder.Configuration["SqlConnectionString"];
 string zealyApiKey = builder.Configuration["ZealyApiKey"];
+string purchasePriceMultiplier = builder.Configuration["PurchasePriceMultiplier"];
 
-builder.Services.AddSingleton(new MayhemConfiguration(sqlConnectionString, zealyApiKey));
+builder.Services.AddSingleton(new MayhemConfiguration(sqlConnectionString, zealyApiKey, purchasePriceMultiplier));
 
 builder.Services.AddMayhemContext(sqlConnectionString);
 builder.Services.AddAutoMapperConfiguration();
@@ -66,8 +67,8 @@ var app = builder.Build();
 
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 //}
 
 app.UseIpRateLimiting();

@@ -2,10 +2,6 @@
 using Mayhem.Bl.Services.Interfaces;
 using Mayhem.Bl.Validators.Base;
 using Mayhem.Dal.Dto.Requests;
-using System.Net.Http;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Text.Json;
 
 namespace Mayhem.Bl.Validators
 {
@@ -42,7 +38,7 @@ namespace Mayhem.Bl.Validators
                     try
                     {
                         DateTime dateTime = UnixTimeToDateTime(nonce);
-                        if(dateTime.Year <= DateTime.Now.Year && dateTime.Year > 2000)
+                        if (dateTime.Year <= DateTime.Now.Year && dateTime.Year > 2000)
                         {
                             return true;
                         }
