@@ -29,23 +29,10 @@ namespace Mayhem.ApplicationSetup
 
         public static void ConfigureKeyVault(this IConfigurationBuilder configuration)
         {
-            bool isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
             string keyVaultEndpoint = Environment.GetEnvironmentVariable("TDSAuthorizationApiKeyVaultEndpoint");
 
-            if (isDevelopment)
-            {
-                configuration.AddAzureKeyVault(
-                    new Uri(keyVaultEndpoint),
-                    new DefaultAzureCredential(new DefaultAzureCredentialOptions
-                    {
-                        ManagedIdentityClientId = "ef6d1fbb-4f75-4b1b-be94-7cbac1f585c6"
-                    }));
-            }
-            else
-            {
-                SecretClient secretClient = new(new(keyVaultEndpoint), new DefaultAzureCredential());
-                configuration.AddAzureKeyVault(secretClient, new KeyVaultSecretManager());
-            }
+            SecretClient secretClient = new(new(keyVaultEndpoint), new DefaultAzureCredential());
+            configuration.AddAzureKeyVault(secretClient, new KeyVaultSecretManager());
         }
 
         public static void AddAutoMapperConfiguration(this IServiceCollection services)

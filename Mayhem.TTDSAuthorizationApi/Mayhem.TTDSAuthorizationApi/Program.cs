@@ -2,6 +2,8 @@ using AspNetCoreRateLimit;
 using Mayhem.ApplicationSetup;
 using Mayhem.Configuration;
 using Mayhem.TTDSAuthorizationApi.Filters;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.AzureAppServices;
 
 string CorsPolicy = nameof(CorsPolicy);
 
@@ -62,6 +64,13 @@ builder.Services.AddServices();
 builder.Services.AddRepository();
 builder.Services.AddValidators();
 builder.Services.AddMayhemHttpClient();
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.AddConsole();
+    loggingBuilder.AddDebug();
+    loggingBuilder.AddAzureWebAppDiagnostics(); // Dodaj logowanie do Azure
+});
+
 
 var app = builder.Build();
 

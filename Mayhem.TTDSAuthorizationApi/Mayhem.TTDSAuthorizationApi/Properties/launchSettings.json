@@ -16,7 +16,7 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "TDSAuthorizationApiKeyVaultEndpoint": "https://tdsauthapikeyvault.vault.azure.net/"
+        "TDSAuthorizationApiKeyVaultEndpoint": "https://cm-tdsauthapi-keyvault.vault.azure.net/"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7112;http://localhost:5068"
